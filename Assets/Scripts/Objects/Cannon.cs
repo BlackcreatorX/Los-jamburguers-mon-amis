@@ -1,15 +1,24 @@
+using System.Collections;
 using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
+    [Header("Settings")]
     public GameObject projectilePrefab;
     public Transform firePoint;
     public float shootForce = 15f;
+    public float reloadTime = 0.6f;
 
-    [SerializeField] ParticleSystem cannonParticles;
-    
-    private bool canShoot = true;
+    private bool canShoot = false;
     private float timeVal = 0;
+    private bool isReloading = false;
+    [SerializeField] ParticleSystem cannonParticles;
+
+    void Start()
+    {
+        AudioManager.Instance.Playidle();
+        StartCoroutine(EnableShooting(0.5f));
+    }
 
     void Update()
     {
@@ -23,31 +32,52 @@ public class Cannon : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
         // 2. Disparo (Click izquierdo)
-        if (canShoot)
-        {
-             if (Input.GetMouseButtonDown(0) )
+        if (Input.GetMouseButtonDown(0) && canShoot && !isReloading)
         {
             Shoot();
-        }
         }
        
     }
 
     void Shoot()
     {
-        PlayParticles();
-
         canShoot = false;
+
+        // Audio
+        AudioManager.Instance.StopIdle();
+        AudioManager.Instance.PlayShoot();
+
         GameObject p = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-        // Destruir bala después de 3 seg si no choca con nada para limpiar memoria
-        Destroy(p, 3f); 
+        Destroy(p, 3f);
         p.GetComponent<Rigidbody2D>().AddForce(firePoint.up * shootForce, ForceMode2D.Impulse);
+        PlayParticles();
     }
 
     public void ResetCannon()
     {
-        canShoot = true;
+        if (!isReloading)
+        {
+            StartCoroutine(ReloadCoroutine());
+        }
     }
+
+    IEnumerator ReloadCoroutine()
+    {
+        // isReloading = true;
+
+        yield return new WaitForSeconds(reloadTime);
+
+        canShoot = true;
+        object isReloading = false;
+
+        AudioManager.Instance.Playidle();
+    }
+
+    IEnumerator EnableShooting(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canShoot = true;
+    }    
     public void PlayParticles()
     {
         // Reinicia completamente el sistema (padre + hijos)

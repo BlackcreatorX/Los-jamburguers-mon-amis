@@ -13,7 +13,10 @@ public class LevelManager : MonoBehaviour
     [Header("Optimization")]
     public int roomsToKeepBelow = 3;
 
+    public int oldestAliveLevel = 0;
+
     private Queue<GameObject> activeRooms = new Queue<GameObject>();
+    private List<GameObject> roomsWithCows = new List<GameObject>();
     private float nextSpawnY = 0;
 
     void Start()
@@ -28,6 +31,8 @@ public class LevelManager : MonoBehaviour
     void SpawnRoom()
     {
         GameObject room = Instantiate(roomPrefab, new Vector3(0, nextSpawnY, 0), Quaternion.identity);
+
+        bool spawnedCow = false;
         
         // LOGICA DE GENERACIÓN DE OBSTACULOS DENTRO DEL CUARTO
         // Generamos un obstáculo hijo al azar
@@ -39,6 +44,12 @@ public class LevelManager : MonoBehaviour
             {
                 GenerateObstacle(room, "Spawner2");
             }
+        }
+
+        if (spawnedCow)
+        {
+            AudioManager.Instance.PlayCowBell();
+            roomsWithCows.Add(room);
         }
 
         nextSpawnY += roomHeight;
@@ -60,6 +71,9 @@ public class LevelManager : MonoBehaviour
             {
                 GameObject roomToDelete = activeRooms.Dequeue();
                 Destroy(roomToDelete);
+
+                oldestAliveLevel++;
+                
                 CleanOldRooms();
             }
         }
@@ -100,6 +114,27 @@ public class LevelManager : MonoBehaviour
         
         // Reciclar habitaciones: Destruir la de abajo y crear una nueva arriba
         SpawnRoom();
+        CleanOldRooms();
+    }
+
+    void CheckForCowMoo()
+    {
+        for (int i = roomsWithCows.Count - 1; i >= 0; i--)
+        {
+            GameObject room = roomsWithCows[i];
+            if (room == null)
+            {
+                roomsWithCows.RemoveAt(i);
+                continue;
+            }
+
+            if (Mathf.Abs(cameraTarget.position.y - room.transform.position.y) < 1f)
+            {
+                AudioManager.Instance.PlayCowMoo();
+                roomsWithCows.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     public void MoveCameraBackwards(int amount)

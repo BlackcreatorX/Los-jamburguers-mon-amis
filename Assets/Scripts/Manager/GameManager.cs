@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,25 +23,31 @@ public class GameManager : MonoBehaviour
 
     public void Penalize(int roomsBack)
     {
-        int targetLevel = Mathf.Max(0, currentLevel - roomsBack);
-        int difference = currentLevel - targetLevel;
+        int targetLevel = currentLevel - roomsBack;
+        int lowestSaveLevel = levelManager.oldestAliveLevel;
 
-        if (difference > 0)
+        if (targetLevel < lowestSaveLevel)
         {
-            Debug.Log($"Golpe recibido! Regresando {difference} niveles.");
-            currentLevel = targetLevel;
-            levelManager.MoveCameraBackwards(difference);
-            cannon.ResetCannon();
-        }else
-        {
-            Debug.Log("No se puede penalizar más, ya estás en el nivel 0.");
-            cannon.ResetCannon();
+            GameOver();
+            return;
         }
+
+        int difference = currentLevel - targetLevel;
+        currentLevel = targetLevel;
+
+        levelManager.MoveCameraBackwards(difference);
+        cannon.ResetCannon();
     }
     
     // Calcula la dificultad (velocidad) basada en el nivel
     public float GetDifficultySpeed()
     {
         return 1.5f + (currentLevel * 0.2f);
+    }
+
+    void GameOver()
+    {
+        Debug.Log("Game Over! Reiniciando el juego...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
