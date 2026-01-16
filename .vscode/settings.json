@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "La trascendencia del valiente pinguino.slnx"
+    "dotnet.defaultSolution": "Los-jamburguers-mon-amis.slnx"
 }
