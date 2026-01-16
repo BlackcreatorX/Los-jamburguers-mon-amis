@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public int currentLevel = 0;
     public int totalLevels = 30;
-    public float roomHeight = 10f; // Importante: Debe coincidir con el tamaño de tu cuarto
+    public float roomHeight = 10f;
 
     // Referencia al LevelManager para pedirle que mueva la cámara
     public LevelManager levelManager;
@@ -24,20 +24,23 @@ public class GameManager : MonoBehaviour
     {
         int targetLevel = Mathf.Max(0, currentLevel - roomsBack);
         int difference = currentLevel - targetLevel;
-        
-        currentLevel = targetLevel;
-        
-        // Movemos la cámara hacia abajo
-        levelManager.MoveCameraBackwards(difference);
-        
-        // Reseteamos el cañón
-        cannon.ResetCannon();
+
+        if (difference > 0)
+        {
+            Debug.Log($"Golpe recibido! Regresando {difference} niveles.");
+            currentLevel = targetLevel;
+            levelManager.MoveCameraBackwards(difference);
+            cannon.ResetCannon();
+        }else
+        {
+            Debug.Log("No se puede penalizar más, ya estás en el nivel 0.");
+            cannon.ResetCannon();
+        }
     }
     
     // Calcula la dificultad (velocidad) basada en el nivel
     public float GetDifficultySpeed()
     {
-        // Base 1.5f + un poquito más por cada nivel
         return 1.5f + (currentLevel * 0.2f);
     }
 }

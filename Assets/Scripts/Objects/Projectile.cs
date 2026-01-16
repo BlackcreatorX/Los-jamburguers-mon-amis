@@ -22,6 +22,7 @@ public class Projectile : MonoBehaviour
         if (other.gameObject.CompareTag("Obstacle"))
         {
             Obstacle obs = other.gameObject.GetComponent<Obstacle>();
+            Debug.Log("Bala chocó con obstáculo de tipo " + obs.type);
             if(obs != null) obs.HitPlayer();
             
             Destroy(gameObject); // Destruir bala
@@ -29,7 +30,6 @@ public class Projectile : MonoBehaviour
         else 
         {
             // Si chocas con la pared normal, simplemente se destruye la bala y pierdes el turno
-            // (Opcional: puedes hacer que rebote, pero aquí reseteamos el cañón)
             FindFirstObjectByType<Cannon>().ResetCannon();
             Destroy(gameObject);
         }
