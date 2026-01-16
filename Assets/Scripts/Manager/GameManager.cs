@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public void Penalize(int roomsBack)
     {
+        AudioManager.Instance.PlayImpact();
         int targetLevel = currentLevel - roomsBack;
         int lowestSaveLevel = levelManager.oldestAliveLevel;
 
