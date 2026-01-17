@@ -272,7 +272,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1802583920}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1240154477
@@ -525,6 +526,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1802583920 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2482332409885679573, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
+  m_PrefabInstance: {fileID: 3048451064272671684}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1802583921 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2628545015997335840, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
+  m_PrefabInstance: {fileID: 3048451064272671684}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee4a421c5907324ca7a3bdef65f270c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cannon
 --- !u!1 &1827140558
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,8 +575,6 @@ MonoBehaviour:
   cameraTarget: {fileID: 1141267245}
   roomPrefab: {fileID: 4153574687045757327, guid: 69eaf519e6b53134489a629aefe9d1a5, type: 3}
   obstaclePrefab: {fileID: 2522944117818489068, guid: efb54264d936ba34f83bc03fec373c68, type: 3}
-  cannonPrefab: {fileID: 3866906670224743311, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
-  oxygenTankPrefab: {fileID: 7147928312788481426, guid: 022d9525dc59ebf4b9ded43beb010d07, type: 3}
   roomHeight: 10
   levelForDoubleObstacle: 10
   roomsToKeepBelow: 3
@@ -579,11 +594,8 @@ MonoBehaviour:
   currentLevel: 0
   totalLevels: 30
   roomHeight: 10
-  maxOxygen: 100
-  currentOxygen: 0
-  oxygenCostPerMove: 0.5
   levelManager: {fileID: 1827140559}
-  currentCannon: {fileID: 0}
+  cannon: {fileID: 1802583921}
 --- !u!4 &1827140561
 Transform:
   m_ObjectHideFlags: 0
@@ -605,7 +617,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1240154476}
     m_Modifications:
     - target: {fileID: 2482332409885679573, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
       propertyPath: m_LocalPosition.x
@@ -617,7 +629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2482332409885679573, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2482332409885679573, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
       propertyPath: m_LocalRotation.w
@@ -648,20 +660,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2628545015997335840, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
-      propertyPath: isPlayerInside
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2628545015997335840, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
       propertyPath: cannonParticles
       value: 
       objectReference: {fileID: 2862776365460415967, guid: 5344e2d92bd034847b37fff737380853, type: 3}
     - target: {fileID: 3866906670224743311, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
       propertyPath: m_Name
       value: Cannon
-      objectReference: {fileID: 0}
-    - target: {fileID: 3866906670224743311, guid: ecd95724939dbcd4683f799089d7b542, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -746,23 +750,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 175304887483423079, guid: 50ae53980c0cfd14f8215c5bc8859c94, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1978444272862316604, guid: 50ae53980c0cfd14f8215c5bc8859c94, type: 3}
       propertyPath: m_Name
       value: MusicSystem
       objectReference: {fileID: 0}
-    - target: {fileID: 1978444272862316604, guid: 50ae53980c0cfd14f8215c5bc8859c94, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2274536434344316684, guid: 50ae53980c0cfd14f8215c5bc8859c94, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3852559778410467649, guid: 50ae53980c0cfd14f8215c5bc8859c94, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4086998195768036478, guid: 50ae53980c0cfd14f8215c5bc8859c94, type: 3}
       propertyPath: m_Pivot.x
@@ -846,7 +846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4965555223161382851, guid: 50ae53980c0cfd14f8215c5bc8859c94, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5042052341097401802, guid: 50ae53980c0cfd14f8215c5bc8859c94, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -877,4 +877,3 @@ SceneRoots:
   - {fileID: 8333367893947818325}
   - {fileID: 1352601871}
   - {fileID: 587515906}
-  - {fileID: 3048451064272671684}

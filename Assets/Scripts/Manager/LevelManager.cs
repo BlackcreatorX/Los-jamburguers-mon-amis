@@ -7,8 +7,6 @@ public class LevelManager : MonoBehaviour
     public Transform cameraTarget;
     public GameObject roomPrefab;
     public GameObject obstaclePrefab;
-    public GameObject cannonPrefab;
-    public GameObject oxygenTankPrefab;
     public float roomHeight = 10f;
     [Header("Difficulty")]
     public int levelForDoubleObstacle = 10;
@@ -24,7 +22,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         // Generar 3 habitaciones iniciales
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
             SpawnRoom();
         }
@@ -46,26 +44,6 @@ public class LevelManager : MonoBehaviour
             {
                 GenerateObstacle(room, "Spawner2");
             }
-        }
-
-        if (nextSpawnY > 0)
-        {
-            Vector3 cannonPos = new Vector3(0, -3.5f, 0);
-            GameObject newCannon = Instantiate(cannonPrefab, room.transform);
-            newCannon.transform.localPosition = cannonPos;
-
-            Cannon cScript = newCannon.GetComponent<Cannon>();
-            cScript.isPlayerInside = false;
-            cScript.isTargetCannon = true;
-            newCannon.tag = "Cannon";
-        }
-
-        int levelPrediction = GameManager.Instance.currentLevel + activeRooms.Count;
-        if (levelPrediction > 0 && levelPrediction % 5 == 0)
-        {
-            GameObject oxy = Instantiate(oxygenTankPrefab, room.transform);
-            oxy.transform.localPosition = new Vector3(Random.Range(-2f, 2f), 2f, 0);
-            oxy.tag = "Oxygen";
         }
 
         if (spawnedCow)
@@ -109,20 +87,19 @@ public class LevelManager : MonoBehaviour
         {
             GameObject obs = Instantiate(obstaclePrefab, spawner.position, Quaternion.identity);
             obs.transform.parent = room.transform;
-            obs.GetComponent<Obstacle>().type = Random.Range(0, 3);
 
-            // Obstacle obsScript = obs.GetComponent<Obstacle>();
+            Obstacle obsScript = obs.GetComponent<Obstacle>();
 
             // Asignar el tipo de forma aleatoria
-            // int randomType = Random.Range(0, 3);
-            // obsScript.type = randomType;
+            int randomType = Random.Range(0, 3);
+            obsScript.type = randomType;
 
-            // // Debug de consola
-            // string typeName = "";
-            // if (randomType == 0) typeName = "Estático";
-            // if (randomType == 1) typeName = "Móvil";
-            // if (randomType == 2) typeName = "Resistente";
-            // Debug.Log("Generado obstáculo " + typeName + " en habitación Y=" + room.transform.position.y);
+            // Debug de consola
+            string typeName = "";
+            if (randomType == 0) typeName = "Estático";
+            if (randomType == 1) typeName = "Móvil";
+            if (randomType == 2) typeName = "Resistente";
+            Debug.Log("Generado obstáculo " + typeName + " en habitación Y=" + room.transform.position.y);
         } else
         {
             if (spawnerName == "Spawner2")
