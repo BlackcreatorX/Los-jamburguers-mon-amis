@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstacle
   - LevelTrigger
+  - Cannon
+  - Oxygen
   layers:
   - Default
   - TransparentFX
