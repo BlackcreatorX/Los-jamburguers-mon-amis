@@ -180,9 +180,9 @@ MonoBehaviour:
   sfxSource: {fileID: 1688121317989187857}
   sfxLoopSource: {fileID: 6684582181557974733}
   backgroundMusic: {fileID: 8300000, guid: b97855c0c926fd646954ed667dade4c0, type: 3}
-  cannonExplosion: {fileID: 8300000, guid: 19577b8c5ef09514faa8f389b6a3b66a, type: 3}
-  pinguinLaunch: {fileID: 8300000, guid: 58f0f31c8efc9de448052357a51cebde, type: 3}
-  idleSound: {fileID: 8300000, guid: 68ec902a21a9e2d40ab07817bb075e2b, type: 3}
+  cannonExplosion: {fileID: 8300000, guid: df8b848d36237d547a7d3afad365c556, type: 3}
+  pinguinLaunch: {fileID: 8300000, guid: 711a748330c3e5241bc78e26fe9e90b1, type: 3}
+  idleSound: {fileID: 8300000, guid: 4ad1b2beec0d30d43a16d878f2803e0f, type: 3}
   cowMoo: {fileID: 8300000, guid: b97855c0c926fd646954ed667dade4c0, type: 3}
   cowBell: {fileID: 8300000, guid: 481285305fd032744805603e40cc549c, type: 3}
 --- !u!1 &3536386659039768752
